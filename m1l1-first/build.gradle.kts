@@ -3,13 +3,13 @@ plugins {
 }
 
 dependencies {
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation(kotlin("test-junit"))
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
+//tasks.test {
+//    useJUnitPlatform()
+//}
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
