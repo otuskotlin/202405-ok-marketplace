@@ -1,4 +1,4 @@
-# 202312-ok-marketplace
+# 202405-ok-marketplace
 
 Учебный проект курса
 [Kotlin Backend Developer](https://otus.ru/lessons/kotlin/).
