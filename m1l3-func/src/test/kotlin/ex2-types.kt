@@ -30,7 +30,7 @@ private fun intRes(): Int = 22 * 10
 
 private fun nothingRes(): Nothing = throw Exception("My Exception")
 
-private fun withNothing(i: Int) = when(i) {
+private fun withNothing(i: Int) = when (i) {
     12 -> 1
     else -> nothingRes()
 }

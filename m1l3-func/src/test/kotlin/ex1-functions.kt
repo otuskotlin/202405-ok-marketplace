@@ -5,7 +5,7 @@ class FunctionsTest {
     @Test
     fun simpleFun() {
         val param = 0.1
-        val expected = param*param
+        val expected = param * param
         assertEquals(expected, simple(param))
     }
 
@@ -26,7 +26,7 @@ class FunctionsTest {
     }
 }
 
-private fun simple(x: Double): Double = x*x
+private fun simple(x: Double): Double = x * x
 
 private fun defaultArgs(x: Int, y: Int = 12, s: String = "str") = "$s: $x, $y"
 

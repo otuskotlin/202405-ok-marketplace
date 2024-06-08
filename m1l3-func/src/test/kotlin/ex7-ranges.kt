@@ -43,14 +43,14 @@ class RangesTest {
 
     @Test
     fun iterate() {
-        for(i in 1..3) {
+        for (i in 1..3) {
             assertTrue(i in (1..3))
         }
     }
 
     @Test
     fun iterate1() {
-        (1..8 step 2). forEach {
+        (1..8 step 2).forEach {
             assertTrue(it in (1..8))
         }
     }
