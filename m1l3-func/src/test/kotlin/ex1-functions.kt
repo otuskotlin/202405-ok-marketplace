@@ -22,7 +22,7 @@ class FunctionsTest {
 
     @Test
     fun extensions() {
-        assertEquals("My String is string", "string".myExtenstion())
+        assertEquals("My String is string", "string".myExtension())
     }
 }
 
@@ -30,4 +30,4 @@ private fun simple(x: Double): Double = x*x
 
 private fun defaultArgs(x: Int, y: Int = 12, s: String = "str") = "$s: $x, $y"
 
-private fun String.myExtenstion() = "My String is $this"
+private fun String.myExtension() = "My String is $this"
