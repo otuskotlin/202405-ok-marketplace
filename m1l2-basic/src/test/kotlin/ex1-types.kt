@@ -8,9 +8,9 @@ class TypesTest {
         assertIs<Byte>(b)
         assertIs<Int>(1)
 
-        val b2: Byte = 1 + 2 // WARNING
-        assertIs<Byte>(b2)
-        assertIs<Int>(1 + 2)
+//        val b2: Byte = 1 + 2 // ERROR
+//        assertIs<Byte>(b2)
+//        assertIs<Int>(1 + 2)
 
         val b3 = 2.toByte()
         assertIs<Byte>(b3)
