@@ -10,7 +10,7 @@ import libcurl.sum_struct
 fun sumStruct(a: Int, b: Double): Double {
 
     // Инициализируем экземпляр c-структуры
-    val s = cValue<MySumStruct> {
+    val s: CValue<MySumStruct> = cValue<MySumStruct> {
         this.a = a
         this.b = b
     }

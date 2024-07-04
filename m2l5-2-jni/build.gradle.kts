@@ -35,10 +35,6 @@ tasks {
     val pathToLib: String = project.layout.buildDirectory.dir("c/lib").get().toString()
     println("PATH TO LIB: $pathToLib")
 
-    withType<Test>().all {
-        systemProperty("java.library.path", pathToLib)
-    }
-
     val jniHeaderDirectory = layout.buildDirectory.dir("jniIncludes").get().asFile
 
     val generateJniHeaders by creating {
@@ -125,5 +121,6 @@ tasks {
     }
     withType(KotlinJvmTest::class) {
         dependsOn(makeCLib)
+        systemProperty("java.library.path", pathToLib)
     }
 }
