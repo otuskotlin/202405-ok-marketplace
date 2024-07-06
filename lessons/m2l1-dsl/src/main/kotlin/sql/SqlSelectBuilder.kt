@@ -13,7 +13,7 @@ class SqlSelectBuilder {
     }
 
     fun from(table: String) {
-        this.table = table;
+        this.table = table
     }
 
     fun select(vararg columns: String) {
