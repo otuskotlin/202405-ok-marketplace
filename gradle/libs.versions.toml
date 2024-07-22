@@ -9,7 +9,7 @@ binaryCompabilityValidator = "0.13.2"
 openapi-generator = "7.3.0"
 jackson = "2.16.1"
 # BASE
-jvm-compiler = "11"
+jvm-compiler = "17"
 jvm-language = "21"
 
 [libraries]
