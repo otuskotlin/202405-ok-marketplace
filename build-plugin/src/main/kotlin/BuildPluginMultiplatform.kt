@@ -7,9 +7,9 @@ import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.the
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 @Suppress("unused")
 internal class BuildPluginMultiplatform : Plugin<Project> {
@@ -34,7 +34,6 @@ internal class BuildPluginMultiplatform : Plugin<Project> {
     }
 }
 
-@OptIn(ExperimentalKotlinGradlePluginApi::class)
 @Suppress("LongMethod", "MagicNumber")
 private fun KotlinMultiplatformExtension.configureTargets(project: Project) {
     val libs = project.the<LibrariesForLibs>()
@@ -42,14 +41,7 @@ private fun KotlinMultiplatformExtension.configureTargets(project: Project) {
         languageVersion.set(JavaLanguageVersion.of(libs.versions.jvm.language.get()))
 //        vendor.set(JvmVendorSpec.AZUL)
     }
-
-    jvm {
-        compilations.configureEach {
-            compilerOptions.configure {
-                jvmTarget.set(JvmTarget.valueOf("JVM_${libs.versions.jvm.compiler.get()}"))
-            }
-        }
-    }
+    jvm()
     linuxX64()
     macosArm64()
     macosX64()
@@ -57,4 +49,10 @@ private fun KotlinMultiplatformExtension.configureTargets(project: Project) {
         sourceCompatibility = libs.versions.jvm.language.get()
         targetCompatibility = libs.versions.jvm.compiler.get()
     }
+    project.tasks.withType(KotlinJvmCompile::class.java).configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.valueOf("JVM_" + libs.versions.jvm.compiler.get()))
+        }
+    }
+
 }
