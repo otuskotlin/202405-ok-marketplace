@@ -5,6 +5,7 @@ import io.ktor.http.*
 import org.testcontainers.containers.DockerComposeContainer
 import ru.otus.otuskotlin.marketplace.blackbox.fixture.docker.DockerCompose
 import java.io.File
+import java.time.Duration
 
 private val log = Logger
 
@@ -28,6 +29,7 @@ abstract class AbstractDockerCompose(
     private val compose =
         DockerComposeContainer(getComposeFiles()).apply {
 //            withOptions("--compatibility")
+            withStartupTimeout(Duration.ofMinutes(5))
             apps.forEach { (service, port) ->
                 withExposedService(
                     service,
