@@ -5,8 +5,8 @@ import io.kotest.assertions.withClue
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldNotBe
 import ru.otus.otuskotlin.marketplace.api.v2.models.*
-import ru.otus.otuskotlin.marketplace.blackbox.test.action.beValidId
 import ru.otus.otuskotlin.marketplace.e2e.be.fixture.client.Client
+import ru.otus.otuskotlin.marketplace.e2e.be.test.action.beValidId
 
 suspend fun Client.readAd(id: String?, debug: AdDebug = debugStubV2): AdResponseObject = readAd(id, debug = debug) {
     it should haveSuccessResult

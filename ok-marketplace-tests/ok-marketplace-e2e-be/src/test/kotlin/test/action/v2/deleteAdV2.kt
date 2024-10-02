@@ -5,9 +5,9 @@ import io.kotest.assertions.withClue
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import ru.otus.otuskotlin.marketplace.api.v2.models.*
-import ru.otus.otuskotlin.marketplace.blackbox.test.action.beValidId
-import ru.otus.otuskotlin.marketplace.blackbox.test.action.beValidLock
 import ru.otus.otuskotlin.marketplace.e2e.be.fixture.client.Client
+import ru.otus.otuskotlin.marketplace.e2e.be.test.action.beValidId
+import ru.otus.otuskotlin.marketplace.e2e.be.test.action.beValidLock
 
 suspend fun Client.deleteAd(ad: AdResponseObject, debug: AdDebug = debugStubV2) {
     val id = ad.id

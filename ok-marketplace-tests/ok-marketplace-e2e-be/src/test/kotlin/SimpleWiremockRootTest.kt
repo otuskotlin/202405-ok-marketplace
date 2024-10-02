@@ -42,7 +42,7 @@ class SimpleWiremockRootTest : StringSpec({
             DockerComposeContainer(File("docker-compose/docker-compose-wiremock.yml")).apply {
                 withOptions("--compatibility")
                 withExposedService(service, port)
-                withLocalCompose(true)
+//                withLocalCompose(true)
             }
         }
 
