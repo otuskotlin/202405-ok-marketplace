@@ -18,7 +18,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.`__` as bs
  * Для запуска тестов этого файла требуется запустить локальный экземпляр ArcadeDB
  * Можно использовать файл /deploy/docker-compose-arcadedb.yml
  */
-//@Ignore("Тест для экспериментов")
+@Ignore("Тест для экспериментов")
 class SimpleTest {
     private val host: String = "localhost"
     private val user: String = "root"
