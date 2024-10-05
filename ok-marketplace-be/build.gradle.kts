@@ -36,7 +36,7 @@ tasks {
     }
 
     create("buildImages") {
-        dependsOn(project("ok-marketplace-app-spring").tasks.getByName("bootBuildImage"))
+//        dependsOn(project("ok-marketplace-app-spring").tasks.getByName("bootBuildImage"))
         dependsOn(project("ok-marketplace-app-ktor").tasks.getByName("publishImageToLocalRegistry"))
         dependsOn(project("ok-marketplace-app-ktor").tasks.getByName("dockerBuildX64Image"))
     }
