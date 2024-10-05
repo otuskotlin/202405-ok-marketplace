@@ -25,10 +25,10 @@ class SimpleTest {
     private val pass: String = "root_root"
 
     private val dbName: String = "graph"
-
 //     private val dbName: String = "mkpl" // Этот граф должен быть настроен в /home/arcadedb/config/gremlin-server.groovy
-    private val aPort: Int = 2480
-    private val gPort: Int = 8182
+
+    private val aPort: Int = 2480 // Порт для интерфейса ArcadeDb
+    private val gPort: Int = 8182 // Порт для интерфейса Apache Tinkerpop Gremlin
 
     /**
      * Пример запроса без использования библиотеки Gremlin.
@@ -91,11 +91,12 @@ class SimpleTest {
             //               Этот граф должен быть указан в /home/arcadedb/config/gremblin-server.groovy
             .withRemote(DriverRemoteConnection.using(cluster, dbName))
             .use { g ->
-                val userId = g
+                val user = g
                     .addV("User")
                     .property(VertexProperty.Cardinality.single, "name", "Evan")
                     .next()
-                    .id()
+//                    .id()
+                val userId = user.id()
                 println("UserID: $userId")
             }
     }
@@ -112,10 +113,40 @@ class SimpleTest {
         }.create()
         traversal()
             .withRemote(DriverRemoteConnection.using(cluster)).use { g ->
+                // Создаем юзера
+                val userId = g
+                    .addV("User")
+                    .property("name", "Ivan")
+                    .next()
+                    .id()
+                println("UserID: $userId")
+
+                // Создаем узел и привязываем его к предыдущему через связь Owns
+                val id = g
+                    .addV("Test")
+                    .`as`("a")
+                    .property("lock", "111")
+                    .addE("Owns")
+                    .from(bs.V<Vertex>(userId))
+                    .select<Vertex>("a")
+                    .next()
+                    .id()
+                println("ID: $id")
+
+                // Обычный результат
                 val x = g.V().hasLabel("Test")
                     .toList()
                 println("CONTENT: ${x}")
 
+                // Это поиск связи по ID
+                val owner = g
+                    .V(userId)
+                    .outE("Owns")
+                    .where(bs.inV().id().`is`(id))
+                    .toList()
+                println("OWNER: $owner")
+
+                // Результат через проект
                 val y = g.V().hasLabel("Test") //.`as`("a")
                     .project<Any?>("lock", "ownerId", "z")
                     .by("lock")
@@ -128,7 +159,7 @@ class SimpleTest {
     }
 
     /**
-     * Демонстрация некоторых возможностей Gremlin
+     * Демонстрация условных запросов
      */
     @Test
     fun gremlinExamples() {
@@ -138,33 +169,15 @@ class SimpleTest {
             credentials(user, pass)
         }.create()
         traversal().withRemote(DriverRemoteConnection.using(cluster)).use { g ->
-            // Создаем узел
-            val userId = g
-                .addV("User")
-                .property("name", "Ivan")
-                .next()
-                .id()
-            println("UserID: $userId")
 
             // Создаем узел и привязываем его к предыдущему через связь Owns
             val id = g
                 .addV("Test")
                 .`as`("a")
                 .property("lock", "111")
-                .addE("Owns")
-                .from(bs.V<Vertex>(userId))
-                .select<Vertex>("a")
                 .next()
                 .id()
             println("ID: $id")
-
-            // Это поиск связи по ID
-            val owner = g
-                .V(userId)
-                .outE("Owns")
-                .where(bs.inV().id().`is`(id))
-                .toList()
-            println("OWNER: $owner")
 
             // Запрос с условием choose
             val n = g
@@ -173,7 +186,7 @@ class SimpleTest {
                 .choose(
                     bs.select<Vertex, Vertex>("a")
                         .values<String>("lock")
-                        .`is`("111"),
+                        .`is`("112"),
                     bs.select<Vertex, String>("a").drop().inject("success"),
                     bs.constant("lock-failure")
                 ).toList()
